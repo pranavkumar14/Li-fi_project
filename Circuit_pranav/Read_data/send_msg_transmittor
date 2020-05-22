@@ -1,0 +1,44 @@
+#define DATA 3
+#define CLK 4
+#define T 5
+#define ENABLE 10
+int a=97;
+char b;
+void sendBit(int bit) {
+  digitalWrite(DATA, bit) ;
+  delay(0.4) ;
+  digitalWrite(CLK, HIGH) ;
+  delay(T) ;
+  digitalWrite(CLK, LOW) ;
+  delay(T);
+}
+
+void sendByte(int byte){
+  int bits[8] ;
+  for(int i =  7 ; i >= 0 ; --i) {
+    bits[i] =  byte % 2 ;
+    byte /= 2 ;
+  }
+  for(int i = 0 ; i < 8 ; ++i) {
+    sendBit(bits[i]) ;
+  }
+}
+
+void setup() {
+  Serial.begin(9600) ;
+  pinMode(CLK, OUTPUT) ;
+  pinMode(DATA, OUTPUT) ;
+  pinMode(ENABLE, INPUT) ;
+}
+
+void loop() {
+  // We should be able to send any 8 bit number. That is any number less than 255 in decimal.
+  if(digitalRead(ENABLE)) {
+       if (Serial.available() > 0) {
+	    a= Serial.read();
+	    b=a;
+	    Serial.print(b);
+    sendByte(a) ;
+    }
+  }
+}
