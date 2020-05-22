@@ -1,0 +1,37 @@
+#define RX 3
+#define CLK 4
+
+int prevState = 0 ;
+int currState = 0 ;
+int num = 0 ;
+
+
+int recieveByte() {
+  int bits = 0 ;
+  num = 0 ;
+  while(bits != 8) {
+
+    prevState = currState ;
+    currState = digitalRead(CLK) ;
+
+    // Detect an transition from low to high for the clock.
+    if(prevState == 0 && currState == 1) {
+      int nb = digitalRead(RX) ;
+      num *= 2 ;
+      num += nb ;
+      ++bits ;
+     // Serial.println(nb) ;
+    }
+
+  }
+
+  Serial.println(num) ;
+}
+void setup() {
+  Serial.begin(115200) ;
+  pinMode(RX, INPUT) ;
+  pinMode(CLK, INPUT) ;
+}
+void loop() {
+  recieveByte() ;
+}
