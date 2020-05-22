@@ -11,7 +11,7 @@ between two Arduino UNOs.
 2) Implentation of Networking Protocols for efficient data transfer.
 3) LED for transmission of data in medium.
 
-![image](/arduino.PNG)
+![image](/Documentation/arduino.PNG)
 
 Currently, **RECEIVER** being simulated online, can directly detect variation in voltage. Steps involved in Reciever part are:
 1) Conversion of analog signal to digital signal which is being fed to Arduino.
